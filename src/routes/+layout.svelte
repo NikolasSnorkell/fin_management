@@ -20,7 +20,10 @@
 		flex-direction: column;
 		min-height: 100vh;
 	}
-
+	main{
+		width: 100vw;
+		display: flex;
+	}
 
 	@media (min-width: 480px) {
 	
