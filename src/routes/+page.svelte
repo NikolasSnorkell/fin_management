@@ -1,1 +1,5 @@
-<p>Profile</p>
+<script>
+    import Profile from './add/+page.svelte';
+</script>
+
+<Profile/>
