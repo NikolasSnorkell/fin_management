@@ -1,5 +1,6 @@
 <script>
 	import MainInput from "./MainInput.svelte";
+	import Workspace from "./Workspace.svelte";
 
 
 
@@ -11,6 +12,7 @@
 
 
 <MainInput/>
+<Workspace/>
 
 
 

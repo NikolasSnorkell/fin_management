@@ -15,6 +15,21 @@
 </div>
 
 <style>
+
+		@font-face {
+				font-family: "Gilroy"; 
+				src: url("$lib/font/Gilroy/Gilroy-Light.otf") format("truetype"); 
+				font-style: normal; 
+				font-weight: normal; 
+        } 
+        @font-face {
+                font-family: "Gilroy"; 
+                src: url("$lib/font/Gilroy/Gilroy-ExtraBold.otf") format("truetype"); 
+                font-style: normal; 
+                font-weight: bold; 
+        } 
+
+
 	.app {
 		display: flex;
 		flex-direction: column;
