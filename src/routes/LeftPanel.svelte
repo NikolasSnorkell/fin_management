@@ -2,8 +2,11 @@
 import l_panel__profile from '$lib/img/user-solid-white.png';
 import l_panel__profile_hover from '$lib/img/user-solid-hover.png';
 import l_panel__add from '$lib/img/add-solid-white.png';
+import l_panel__add_hover from '$lib/img/add-solid-hover.png';
 import l_panel__stats from '$lib/img/stats-solid-white.png';
+import l_panel__stats_hover from '$lib/img/stats-solid-hover.png';
 import l_panel__archive from '$lib/img/archive-solid-white.png';
+import l_panel__archive_hover from '$lib/img/archive-solid-hover.png';
 
 let img_paths = {
     'leftPanProfile':l_panel__profile,
@@ -16,16 +19,20 @@ let sources_list = {
     'add':l_panel__add,
     'stats':l_panel__stats,
     'archive':l_panel__archive,
+    'profile_hover':l_panel__profile_hover,
+    'add_hover':l_panel__add_hover,
+    'stats_hover':l_panel__stats_hover,
+    'archive_hover':l_panel__archive_hover,
 }
-function lPanelMouseEnter(elem){
-    
-    hoveredElem.setAttribute('style',"background-image: url("+l_panel__profile_hover+");");
+function lPanelMouseEnter(e){
+    let data_name = e.target.getAttribute('data-name');
+    e.target.setAttribute('style',"background-image: url("+sources_list[data_name+'_hover']+");");
 }
 
-function lPanelMouseLeave(elem){
-    let data_name = hoveredElem.getAttribute('data-name');
-    console.log(data_name);
-    hoveredElem.setAttribute('style',"background-image: url("+sources_list[data_name]+");");
+function lPanelMouseLeave(e){
+    let data_name = e.target.getAttribute('data-name');
+    
+    e.target.setAttribute('style',"background-image: url("+sources_list[data_name]+");");
 }
 
 </script>
@@ -34,22 +41,22 @@ function lPanelMouseLeave(elem){
 <div id="l_panel" class="color_theme">
 
         <div class="l_panel__item l_panel__profile">
-           <a href="/profile" data-name='profile' bind:this ={hoveredElem} on:mouseenter = {lPanelMouseEnter} on:mouseleave = {lPanelMouseLeave} style="background-image: url({l_panel__profile});"> 
+           <a href="/profile" data-name='profile' on:mouseenter = {lPanelMouseEnter} on:mouseleave = {lPanelMouseLeave} style="background-image: url({l_panel__profile});"> 
             <!-- <img src={l_panel__profile} alt=""> -->
         </a>
         </div>
         <div class="l_panel__item l_panel__add">
-           <a href="/add" on:mouseenter = {lPanelMouseEnter} style="background-image: url({l_panel__add});">
+           <a href="/add" data-name='add' on:mouseenter = {lPanelMouseEnter} on:mouseleave = {lPanelMouseLeave} style="background-image: url({l_panel__add});">
              <!-- <img src={l_panel__add} alt=""> -->
         </a>
         </div>
         <div class="l_panel__item l_panel__stats">
-           <a href="/stats" on:mouseenter = {lPanelMouseEnter} style="background-image: url({l_panel__stats});">
+           <a href="/stats"  data-name='stats' on:mouseenter = {lPanelMouseEnter} on:mouseleave = {lPanelMouseLeave} style="background-image: url({l_panel__stats});">
              <!-- <img src={l_panel__stats} alt=""> -->
             </a>
         </div>
         <div class="l_panel__item l_panel__archive">
-            <a href="/archive" on:mouseenter = {lPanelMouseEnter} style="background-image: url({l_panel__archive});">
+            <a href="/archive" data-name='archive' on:mouseenter = {lPanelMouseEnter} on:mouseleave = {lPanelMouseLeave} style="background-image: url({l_panel__archive});">
                 <!-- <img src={l_panel__archive} alt=""> -->
             </a>
         </div>
