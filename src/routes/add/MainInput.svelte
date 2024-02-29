@@ -24,6 +24,7 @@
 
     .main_input{
         width: 100%;
+        height: 10vh;
         display: flex;
         justify-content: center;
         margin-top: 2rem;

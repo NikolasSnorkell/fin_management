@@ -9,16 +9,18 @@
 
 </script>
 
-
+<div id="add_container">
 
 <MainInput/>
 <Workspace/>
 
-
+</div>
 
 <style>
 
-
+#add_container{
+	width: 100%;
+}
 
 
 </style>
