@@ -24,7 +24,43 @@
                     <p class="item_price">1.77</p>
                 </div>
                 <div class="hovered">
-                    <input type="text" class="item_hashtags" value='#молочка'>
+                    <input type="text" class="item_hashtags" value='#молочка' placeholder="(none)">
+                    <!-- <p class="item_hashtags"></p> -->
+                    <p class="item_delete" style="background-image: url({trash_white});"></p>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="face">
+                    <p class="item_title">Филе</p>
+                    <p class="item_price">2.48</p>
+                </div>
+                <div class="hovered">
+                    <input type="text" class="item_hashtags" value='' placeholder="(none)">
+                    <!-- <p class="item_hashtags"></p> -->
+                    <p class="item_delete" style="background-image: url({trash_white});"></p>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="face">
+                    <p class="item_title">Кукуруза сладкая</p>
+                    <p class="item_price">3.50</p>
+                </div>
+                <div class="hovered">
+                    <input type="text" class="item_hashtags" value='#молочка' placeholder="(none)">
+                    <!-- <p class="item_hashtags"></p> -->
+                    <p class="item_delete" style="background-image: url({trash_white});"></p>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="face">
+                    <p class="item_title">Творог</p>
+                    <p class="item_price">1.87</p>
+                </div>
+                <div class="hovered">
+                    <input type="text" class="item_hashtags" value='#молочка' placeholder="(none)">
                     <!-- <p class="item_hashtags"></p> -->
                     <p class="item_delete" style="background-image: url({trash_white});"></p>
                 </div>
@@ -40,7 +76,7 @@
             <div id="market">
                 <input type="text" id="purchase_market" placeholder="Market">
             </div>
-            
+                <p id="final_sum">Total: <span id="total_span">0</span></p>
                 <button type="button" id="add_button" >Add purchase</button>
             
         </div>
@@ -59,6 +95,7 @@
         --add_button_bg_color:#3b3b3b;
         --card_border_radius:10px;
         --main_font_size:24px;
+        --item_hovered_bg_color:#023949;
     
         font-family: 'Gilroy';
         }
@@ -67,7 +104,7 @@
 
         #add__workspace{
             width: 100%;
-            height: 100%;
+            height: auto;
             display: flex;
             justify-content: space-between;
             padding-right: 10%;
@@ -108,7 +145,57 @@
 
         #add__workspace #add__items{
             width: 50%;
-            margin: 0 2vw;
+            height: fit-content;
+            /* margin: 0 2vw; */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: start;
+            align-items: start;
+            column-gap: 3rem;
+            row-gap: 1rem;
+            
+        }
+
+        #add__items .item{
+            width: min-content;
+            height: auto;
+            min-width: 15rem;
+            max-width: 20rem;
+            padding:2rem;
+            background: var(--card_bg_color);
+            
+            border-radius: var(--card_border_radius);
+            position: relative;
+            overflow: hidden;
+        }
+        .item:hover .hovered{
+          top: 0;
+        }
+
+        .item .face{
+            display: flex;
+            column-gap: 2rem;
+        }
+
+        .item .hovered{
+            display: flex;
+            height: 100%;
+            column-gap: 2rem;
+            position: absolute;
+            top: -100%;left: 0;
+            transition: top .3s ease-in-out;
+            background: var(--item_hovered_bg_color);
+        }
+        .hovered input{
+            background: #00000000;
+            width: 70%;
+            color: white;
+            font-weight: bold;
+            padding-left: 1rem;
+        }
+        .hovered input::placeholder{
+                
+            color: white;
             
         }
 
@@ -117,6 +204,7 @@
         #add__workspace #add__others{
             margin: 0 2vw;
             width: 15%;
+            
         }
 
 
@@ -141,6 +229,7 @@
         #add__others #add_button{
             color: white;
             background: var(--add_button_bg_color);
+            border-radius: var(--card_border_radius);
             padding: 1.5rem .5rem;
             font-size: var(--main_font_size);
             width: 100%;
