@@ -15,8 +15,8 @@
 <style>
 
     :global(:root) {
-            /* Color scheme 1 */
-        --searchbar_button_bg_color: #3b3b3b;
+        
+        
        
     
         font-family: 'Gilroy';
@@ -52,7 +52,7 @@
     button{
         width: 4rem;
         height: 3.5rem;
-        background-color: var(--searchbar_button_bg_color);
+        background-color: var(--add_button_bg_color);
         background-size: 30%;
         background-repeat: no-repeat;
         background-position: center;
@@ -60,6 +60,10 @@
         border-radius: 10px;
         filter: drop-shadow(0px 3px 3.5px rgba(0,0,0,0.14));
         margin-left: 1rem;
+        transition: background .3s ease-in-out;
+    }
+    button:hover{
+        background-color: var(--add_button_hover_bg_color);
     }
 
 </style>

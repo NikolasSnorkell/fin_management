@@ -1,8 +1,16 @@
 
 <script>
-    import trash_white from '$lib/img/trash-solid.png';
-    import check_regular from '$lib/img/square-check-regular.png';
-    import check_solid from '$lib/img/square-check-solid-hover.png';
+
+
+ let items = [
+    {'id':0,'title':'Молоко','price':1.77, 'hashtags':'#молочка'},
+    {'id':1,'title':'Филе','price':2.48, 'hashtags':''},
+    {'id':2,'title':'Кукуруза сладкая','price':3.50, 'hashtags':'#мясное'},
+    {'id':3,'title':'Творог','price':1.87, 'hashtags':'#молочка'},
+];
+
+$: total_sum = (items.reduce((total, item) => total + item.price, 0)).toFixed(2);
+
 </script>
 
 <div id="add__workspace" >
@@ -17,57 +25,24 @@
             </li>
         </ul>
 
-        <div id="add__items">
-            <div class="item">
-                <div class="face">
-                    <p class="item_title">Молоко</p>
-                    <p class="item_price">1.77</p>
+       
+            <div id="add__items">
+                {#each items as item}
+                <div class="item">
+                    <div class="face">
+                        <p class="item_title">{item.title}</p>
+                        <p class="item_price">{item.price}</p>
+                    </div>
+                    <div class="hovered">
+                        <input type="text" class="item_hashtags" value='{item.hashtags}' placeholder="(none)">
+                        <!-- <p class="item_hashtags"></p> -->
+                        <p class="item_delete" ></p>
+                    </div>
                 </div>
-                <div class="hovered">
-                    <input type="text" class="item_hashtags" value='#молочка' placeholder="(none)">
-                    <!-- <p class="item_hashtags"></p> -->
-                    <p class="item_delete" style="background-image: url({trash_white});"></p>
-                </div>
+                {/each}
             </div>
+       
 
-            <div class="item">
-                <div class="face">
-                    <p class="item_title">Филе</p>
-                    <p class="item_price">2.48</p>
-                </div>
-                <div class="hovered">
-                    <input type="text" class="item_hashtags" value='' placeholder="(none)">
-                    <!-- <p class="item_hashtags"></p> -->
-                    <p class="item_delete" style="background-image: url({trash_white});"></p>
-                </div>
-            </div>
-
-            <div class="item">
-                <div class="face">
-                    <p class="item_title">Кукуруза сладкая</p>
-                    <p class="item_price">3.50</p>
-                </div>
-                <div class="hovered">
-                    <input type="text" class="item_hashtags" value='#молочка' placeholder="(none)">
-                    <!-- <p class="item_hashtags"></p> -->
-                    <p class="item_delete" style="background-image: url({trash_white});"></p>
-                </div>
-            </div>
-
-            <div class="item">
-                <div class="face">
-                    <p class="item_title">Творог</p>
-                    <p class="item_price">1.87</p>
-                </div>
-                <div class="hovered">
-                    <input type="text" class="item_hashtags" value='#молочка' placeholder="(none)">
-                    <!-- <p class="item_hashtags"></p> -->
-                    <p class="item_delete" style="background-image: url({trash_white});"></p>
-                </div>
-            </div>
-
-
-        </div>
 
         <div id="add__others">
             <div id="date">
@@ -76,7 +51,7 @@
             <div id="market">
                 <input type="text" id="purchase_market" placeholder="Market">
             </div>
-                <p id="final_sum">Total: <span id="total_span">0</span></p>
+                <p id="final_sum">Total: <span id="total_span">{total_sum}</span></p>
                 <button type="button" id="add_button" >Add purchase</button>
             
         </div>
@@ -93,9 +68,11 @@
         --searchbar_button_bg_color: #3b3b3b;
         --card_bg_color:#f8f8f8;
         --add_button_bg_color:#3b3b3b;
+        --add_button_hover_bg_color:#272727;
         --card_border_radius:10px;
         --main_font_size:24px;
         --item_hovered_bg_color:#023949;
+        --item_hovered_del_bg_color:#49020e;
     
         font-family: 'Gilroy';
         }
@@ -135,11 +112,37 @@
         }
 
         #add__category li input{
-          opacity: 1;
+          opacity: 0;
+          
         }
-        #add__category li label::before{
-          background-image: url('$lib/img/square-check-solid-hover.png');
+        #add__category li label{
+          position: relative;
+        }
+        #add__category li label::before, #add__category li label::after{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -2.5rem;
+            width: 2rem;
+            height: 24px;
           background-size: 20px;
+          background-position: center;
+          background-repeat: no-repeat;
+          transition: opacity .2s ease-in-out;
+        } 
+        #add__category li label::before{
+            background-image: url('/src/lib/img/square-check-regular.png');
+        }
+        #add__category li label::after{
+            background-image: url('/src/lib/img/square-check-solid-hover.png');
+            opacity: 0;
+            
+        }
+        #add__category li input:checked + label::after{
+            opacity: 1;
+        }
+        #add__category li input:checked + label::before{
+            opacity: 0;
         }
 
 
@@ -180,7 +183,7 @@
         .item .hovered{
             display: flex;
             height: 100%;
-            column-gap: 2rem;
+            /* column-gap: 2rem; */
             position: absolute;
             top: -100%;left: 0;
             transition: top .3s ease-in-out;
@@ -198,6 +201,18 @@
             color: white;
             
         }
+
+        .item_delete{
+            width: 30%;
+            height: auto;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-image: url('/src/lib/img/trash-solid.png');
+        } 
+        .hovered>.item_delete:hover{
+            cursor: pointer;
+        }
+      
 
 
 
@@ -234,6 +249,12 @@
             font-size: var(--main_font_size);
             width: 100%;
             margin-top: 5rem;
+            transition: background .3s ease-in-out;
+        }
+        #add__others #add_button:hover{
+            
+            background: var(--add_button_hover_bg_color);
+            
         }
 
    
