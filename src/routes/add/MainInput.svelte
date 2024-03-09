@@ -1,6 +1,16 @@
 
 <script>
-    import src from '$lib/img/add-solid-white.png';
+    
+    import {createPurchaseItemsArr} from './stores.js';
+
+let purchase_items = createPurchaseItemsArr([]);
+
+    function addPurchase(){
+        purchase_items.addItem({title:'test',price:2.19,hashtags:'#test'});
+        console.log($purchase_items);
+        purchase_items.delItem(1);
+        console.log($purchase_items);
+    }
 </script>
 
 
@@ -8,7 +18,7 @@
 
     <input type="text" name="purchase" id="input_purchase" placeholder="Add your purchases">
     <input type="text" name="purchase_price" id="input_price" placeholder="Price">
-    <button style="background-image: url({src});"></button>
+    <button on:click={addPurchase}></button>
 
 </div>
 
@@ -56,7 +66,7 @@
         background-size: 30%;
         background-repeat: no-repeat;
         background-position: center;
-
+        background-image: url('src/lib/img/add-solid-white.png');
         border-radius: 10px;
         filter: drop-shadow(0px 3px 3.5px rgba(0,0,0,0.14));
         margin-left: 1rem;

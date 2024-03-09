@@ -1,15 +1,11 @@
 
 <script>
+import {purchase_items} from './stores.js';
+
+$: total_sum = ($purchase_items.reduce((total, item) => total + item.price, 0)).toFixed(2);
 
 
- let items = [
-    {'id':0,'title':'Молоко','price':1.77, 'hashtags':'#молочка'},
-    {'id':1,'title':'Филе','price':2.48, 'hashtags':''},
-    {'id':2,'title':'Кукуруза сладкая','price':3.50, 'hashtags':'#мясное'},
-    {'id':3,'title':'Творог','price':1.87, 'hashtags':'#молочка'},
-];
 
-$: total_sum = (items.reduce((total, item) => total + item.price, 0)).toFixed(2);
 
 </script>
 
@@ -27,7 +23,7 @@ $: total_sum = (items.reduce((total, item) => total + item.price, 0)).toFixed(2)
 
        
             <div id="add__items">
-                {#each items as item}
+                {#each $purchase_items as item}
                 <div class="item">
                     <div class="face">
                         <p class="item_title">{item.title}</p>
@@ -182,6 +178,7 @@ $: total_sum = (items.reduce((total, item) => total + item.price, 0)).toFixed(2)
 
         .item .hovered{
             display: flex;
+            align-items: center;
             height: 100%;
             /* column-gap: 2rem; */
             position: absolute;
@@ -192,9 +189,11 @@ $: total_sum = (items.reduce((total, item) => total + item.price, 0)).toFixed(2)
         .hovered input{
             background: #00000000;
             width: 70%;
+            height: min-content;
             color: white;
             font-weight: bold;
-            padding-left: 1rem;
+            margin-left: 1rem;
+            border-bottom: 1px solid white;
         }
         .hovered input::placeholder{
                 
@@ -204,7 +203,7 @@ $: total_sum = (items.reduce((total, item) => total + item.price, 0)).toFixed(2)
 
         .item_delete{
             width: 30%;
-            height: auto;
+            height: 100%;
             background-position: center;
             background-repeat: no-repeat;
             background-image: url('/src/lib/img/trash-solid.png');
@@ -248,12 +247,19 @@ $: total_sum = (items.reduce((total, item) => total + item.price, 0)).toFixed(2)
             padding: 1.5rem .5rem;
             font-size: var(--main_font_size);
             width: 100%;
-            margin-top: 5rem;
+            margin-top: 3rem;
             transition: background .3s ease-in-out;
         }
         #add__others #add_button:hover{
             
             background: var(--add_button_hover_bg_color);
+            
+        }
+        #add__others #final_sum{
+            text-align: center;
+            font-size: 30px;
+            font-weight: bold;
+            margin-top:4rem;
             
         }
 
