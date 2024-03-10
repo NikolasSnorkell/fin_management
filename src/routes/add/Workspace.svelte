@@ -4,7 +4,11 @@ import {purchase_items} from './stores.js';
 
 $: total_sum = ($purchase_items.reduce((total, item) => total + item.price, 0)).toFixed(2);
 
-
+function delPurchase(id){
+        
+        purchase_items.delItem(id);
+        
+    }
 
 
 </script>
@@ -32,7 +36,7 @@ $: total_sum = ($purchase_items.reduce((total, item) => total + item.price, 0)).
                     <div class="hovered">
                         <input type="text" class="item_hashtags" value='{item.hashtags}' placeholder="(none)">
                         <!-- <p class="item_hashtags"></p> -->
-                        <p class="item_delete" ></p>
+                        <button class="item_delete" id={'item_del_btn-'+item.id} on:click={()=>delPurchase(item.id)}></button>
                     </div>
                 </div>
                 {/each}
@@ -204,6 +208,7 @@ $: total_sum = ($purchase_items.reduce((total, item) => total + item.price, 0)).
         .item_delete{
             width: 30%;
             height: 100%;
+            background-color: #00000000;
             background-position: center;
             background-repeat: no-repeat;
             background-image: url('/src/lib/img/trash-solid.png');

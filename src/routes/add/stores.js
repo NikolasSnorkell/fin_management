@@ -1,8 +1,8 @@
 import { writable } from "svelte/store";
 
-export let purchase_items = createPurchaseItemsArr();
+export let purchase_items = createPurchaseItemsArr([]);
 
-export function createPurchaseItemsArr(arrData=[]) {
+export function createPurchaseItemsArr(arrData) {
     let id = 1;
     const items = arrData;
 	const { subscribe, update } = writable(items);
@@ -17,20 +17,12 @@ export function createPurchaseItemsArr(arrData=[]) {
                 price:data.price,
                 hashtags:data.hashtags
             }
-             update(($items) => [...$items,item]);
+             update((items) => [...items,item]);
             },
 
 		delItem: (id) =>{ 
-            let index = items.findIndex((element,i) => {
-                if(element.id==id){
-                    return true;
-                }
-                return false;
-            });
-            items.splice(index,1);
+          
             
-            
-            
-            update(($items) =>[...$items])}
-}
+            update((items) =>items.filter((t) => t.id != id))}
+        }
 }

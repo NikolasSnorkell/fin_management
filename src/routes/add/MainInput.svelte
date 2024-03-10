@@ -1,23 +1,28 @@
 
 <script>
     
-    import {createPurchaseItemsArr} from './stores.js';
+    import {purchase_items} from './stores.js';
 
-let purchase_items = createPurchaseItemsArr([]);
+
+    let purchase_name = '';
+    let purchase_price = null;
+
 
     function addPurchase(){
-        purchase_items.addItem({title:'test',price:2.19,hashtags:'#test'});
+        if(!purchase_name || !purchase_price)return
+
+        purchase_items.addItem({title:purchase_name,price:+purchase_price,hashtags:'#test'});
         console.log($purchase_items);
-        purchase_items.delItem(1);
-        console.log($purchase_items);
+        purchase_name = '';
+        purchase_price = null;
     }
 </script>
 
 
 <div class="main_input">
 
-    <input type="text" name="purchase" id="input_purchase" placeholder="Add your purchases">
-    <input type="text" name="purchase_price" id="input_price" placeholder="Price">
+    <input type="text" name="purchase" id="input_purchase" placeholder="Add your purchases" bind:value = {purchase_name}>
+    <input type="text" name="purchase_price" id="input_price" placeholder="Price" bind:value = {purchase_price}>
     <button on:click={addPurchase}></button>
 
 </div>
