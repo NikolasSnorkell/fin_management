@@ -239,7 +239,7 @@ function delPurchase(id){
 
         #add__others #date input, #add__others #market input{
             background: var(--card_bg_color);
-            width: 70%;
+            width: 90%;
             text-align: center;
         }
 
