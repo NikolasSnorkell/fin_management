@@ -7,6 +7,8 @@
     let purchase_name = '';
     let purchase_price = null;
 
+    $: suggest = ['Молоко - 1.77','Молоко - 1.77','Молоко - 1.77','Молоко - 1.77'];
+
 
     function addPurchase(){
         if(!purchase_name || !purchase_price)return
@@ -15,6 +17,17 @@
         console.log($purchase_items);
         purchase_name = '';
         purchase_price = null;
+    }
+
+    function suggestClick(e){
+        
+        let value = e.target.innerHTML;
+        if(value.includes(' - ')){
+            let new_params = value.split(' - ');
+            purchase_name = new_params[0];
+            purchase_price = new_params[1];
+            suggest = [];
+        }
     }
 </script>
 
@@ -25,6 +38,11 @@
     <input type="text" name="purchase_price" id="input_price" placeholder="Price" bind:value = {purchase_price}>
     <button on:click={addPurchase}></button>
 
+    <ul id="maininput__suggest">
+        {#each suggest as item}
+        <li on:click={suggestClick}>{item}</li>
+        {/each}
+    </ul>
 </div>
 
 <style>
@@ -32,17 +50,20 @@
     :global(:root) {
         
         
-       
+        --maininput__suggest_bg:#dadada;
+        --maininput__suggest_bg_hover:#e7faff;
     
         font-family: 'Gilroy';
         }
 
     .main_input{
-        width: 100%;
+        width: fit-content;
         height: 10vh;
         display: flex;
         justify-content: center;
+        margin: auto;
         margin-top: 2rem;
+        position: relative;
     }
 
     input{
@@ -55,7 +76,7 @@
 
     input#input_purchase{
         border-radius: 10px 0 0 10px;
-        width: 30%;
+        width: 30vw;
     }
 
     input#input_price{
@@ -80,5 +101,32 @@
     button:hover{
         background-color: var(--add_button_hover_bg_color);
     }
+
+    ul#maininput__suggest{
+        position: absolute;
+        top: 3.5rem;left: 2rem;
+        width: auto;
+        max-width: 30vw;
+        height: fit-content;
+        max-height: 22vh;
+        overflow-y: scroll;
+        /* padding: 1.5rem; */
+        z-index: 100;
+
+        font-size: var(--main_font_size);
+        border-radius:0 0 10px 10px;
+        background: var(--maininput__suggest_bg);
+        transition: background .2s ease-in-out;
+    }
+
+    ul#maininput__suggest li{
+      padding:1rem 4rem;
+    }
+
+    ul#maininput__suggest li:hover{
+      cursor: pointer;
+      background: var(--maininput__suggest_bg_hover);
+    }
+
 
 </style>

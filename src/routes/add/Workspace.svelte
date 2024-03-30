@@ -51,7 +51,10 @@ function delPurchase(id){
             <div id="market">
                 <input type="text" id="purchase_market" placeholder="Market">
             </div>
-                <p id="final_sum">Total: <span id="total_span">{total_sum}</span></p>
+            <div id="commentary">
+                <textarea id="commentary_area" placeholder="Comments here"></textarea>
+            </div>
+                <p id="final_sum">Total: <input type="number" id="total_input" value="{total_sum}"></p>
                 <button type="button" id="add_button" >Add purchase</button>
             
         </div>
@@ -227,7 +230,7 @@ function delPurchase(id){
         }
 
 
-        #add__others #date, #add__others #market{
+        #add__others #date, #add__others #market, #add__others #commentary{
             background: var(--card_bg_color);
             border-radius: var(--card_border_radius);
             padding: 1.5rem .5rem;
@@ -237,10 +240,17 @@ function delPurchase(id){
             margin-top: 2rem;
         }
 
-        #add__others #date input, #add__others #market input{
+        #add__others #date input, #add__others #market input,  #add__others #commentary textarea{
             background: var(--card_bg_color);
             width: 90%;
             text-align: center;
+        }
+
+        #add__others #commentary textarea{
+            min-width: 90%;
+            min-height: 50px;
+            max-height: 150px;
+            font-size: var(--main_font_size);
         }
 
 
@@ -265,7 +275,14 @@ function delPurchase(id){
             font-size: 30px;
             font-weight: bold;
             margin-top:4rem;
-            
+            display: flex;
+            column-gap: 1rem;
+        }
+
+        #final_sum input{
+            width: 10rem;
+            background: #00000000;
+            font-weight: bold;
         }
 
    
