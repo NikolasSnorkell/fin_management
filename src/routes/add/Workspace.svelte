@@ -64,7 +64,7 @@ function delPurchase(id){
 </div>
 
 
-<style>
+<style lang="scss">
 
     :global(:root) {
             /* Color scheme 1 */

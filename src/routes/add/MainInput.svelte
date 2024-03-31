@@ -29,6 +29,14 @@
             suggest = [];
         }
     }
+
+    $: if(purchase_name.length>2){
+        //TODO добавить запрос на бэк на получение предложки
+            suggest = ['Молоко - 1.77','Творог - 1.77'];
+        }else if(purchase_name.length<2){
+            suggest = [];
+        }
+    
 </script>
 
 
@@ -40,12 +48,12 @@
 
     <ul id="maininput__suggest">
         {#each suggest as item}
-        <li on:click={suggestClick}>{item}</li>
+            <li on:click={suggestClick}>{item}</li>
         {/each}
     </ul>
 </div>
 
-<style>
+<style lang="scss">
 
     :global(:root) {
         
@@ -116,11 +124,12 @@
         font-size: var(--main_font_size);
         border-radius:0 0 10px 10px;
         background: var(--maininput__suggest_bg);
-        transition: background .2s ease-in-out;
+       
     }
 
     ul#maininput__suggest li{
       padding:1rem 4rem;
+      transition: background .2s ease-in-out;
     }
 
     ul#maininput__suggest li:hover{

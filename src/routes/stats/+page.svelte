@@ -1,1 +1,26 @@
-<p>Stats</p>
+<script>
+	import Stats from "./Stats.svelte";
+	import PurchaseList from "./PurchaseList.svelte";
+	
+
+</script>
+
+<div id="stats_container">
+
+<Stats/>
+<PurchaseList/>
+
+</div>
+
+<style lang="scss">
+ :global(:root) {
+            /* Color scheme 1 */
+        --total_plan_sum: #5c5c5c;
+        
+        }
+#stats_container{
+	width: 100%;
+}
+
+
+</style>
