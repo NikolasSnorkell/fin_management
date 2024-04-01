@@ -1,5 +1,6 @@
 <script>
     // your script goes here
+    let total_budget_percentage = 85;
 </script>
 
 
@@ -11,7 +12,7 @@
             <span id="total_current_sum">25000</span>
             <span id="total_plan_sum">30000</span>
             
-            <div id="total_progress" style="--total_value: 85;">
+            <div id="total_progress" style="--total_value: {total_budget_percentage};">
                     
             </div>
 
@@ -24,7 +25,7 @@
 
     </div>
 
-    <div class="eb-progress-bar-wrapper">
+    <!-- <div class="eb-progress-bar-wrapper">
 
         <div class="eb-progress-bar html" style="--value: 85; --col: #FF5089">
           <progress id="html" min="0" max="100" value="85"></progress>
@@ -33,7 +34,7 @@
         <!-- <label for="html" class="eb-progress-bar-title">
           <h2>Html</h2>
         </label> -->
-      </div>
+      <!-- </div> --> 
     
 
 
@@ -55,7 +56,7 @@
         height: fit-content;
         min-height: 25rem;
         border-radius: 10px;
-        background: var(--card_bg_color);
+        background: var(--stats_card_bg_color);
     }
 
     #main_stat_block{
@@ -67,34 +68,56 @@
         justify-content: center;
         align-items: center;
         position: relative;
+        padding-top: 6rem;
 
         #total_progress{
-            width: 100%;
-            height: 100%;
-            background: #878787;
-            background-image: conic-gradient(from -90deg, red calc(var(--total_progress_value)*0.5%),#ffff0000 0);
-
+            width: 17rem;
+            height: 17rem;
+            margin: 0rem auto;
+            
+            background-image: conic-gradient(from -90deg, var(--total_budget_bar) calc(var(--total_progress_value)*0.5%),#ffff0000 0);
+            // background-image: conic-gradient(at 60% 45%, red, yellow, green);
+            border-radius: 50% 50% 0 0;
             position: absolute;
+            top: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             animation: total_progress 2s 1 forwards;
-//             &::before {
-//             animation: total_progress 2s 1 forwards;
-//             content:"";
-//   }
+            
+            &::before {
+              content:"";
+            width: 15rem;
+            height: 15rem;
+            
+            
+            display: block;
+            margin:0 auto;
+            z-index:10;
+            background: var(--stats_card_bg_color);
+            border-radius: 50%;
+            // background: #000;
+            
+           }
         }
-    }
-    #main_stat_block span{
-        width:100%;
-        text-align: center;
-        margin-top: .5rem;
-        font-size: var(--main_font_size);
-        font-weight: bold;
-    }
 
-    #main_stat_block #total_plan_sum{
-        color: var(--total_plan_sum_color);
-        font-size: 20px;
-        font-weight: 400;
+
+         span{
+            width:100%;
+            text-align: center;
+            margin-top: .5rem;
+            font-size: var(--main_font_size);
+            font-weight: bold;
+            z-index: 15;
+        }
+
+      #total_plan_sum{
+          color: var(--total_plan_sum_color);
+          font-size: 20px;
+          font-weight: 400;
+      }
     }
+ 
 
 
 
