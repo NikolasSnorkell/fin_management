@@ -62,6 +62,7 @@ import { page } from '$app/stores';
     }
 
     #l_panel{
+        position: fixed;
         width:var(--l_panel_width);
         height: 100vh;
         background: var(--l_panel_bg_color);

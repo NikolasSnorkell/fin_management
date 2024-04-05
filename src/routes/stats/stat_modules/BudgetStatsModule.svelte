@@ -5,40 +5,32 @@
     let total_budget_percentage = Math.floor(total_budget_current / (total_budget_plan/100));
     let other_stats = [
       {
+        "id":0,
         'category_name':"Food",
+        'category_color':'#f88181',
         'sum_plan':9000,
         'sum_current':4500,
-        'bg_color':'red'
+        'percentage':-100+Math.floor(4500 / (9000/100)),
+        'bg_color':'red',
+        'tween':-100
       },
       {
+        "id":1,
         'category_name':"Others",
+        'category_color':'#608bdb',
         'sum_plan':12000,
         'sum_current':5000,
-        'bg_color':'blue'
+        'percentage':-100+Math.floor(5000 / (12000/100)),
+        'bg_color':'blue',
+        'tween':-100
       }
     ]
 
     import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
-
-	
-
-    function others_stats_line(node,{duration,current_sum,plan_sum}){
-     
-
-        return {
-        duration,
-        css: (t) => {
-          // const progress = tweened(0, {
-          //   duration: 2000,
-          //   easing: cubicOut
-          // });
-          let percentage = -100+Math.floor(current_sum / (plan_sum/100))
-          
-          return 'left:-50%';
-        }
-      };
-    }
+  
+ 
+      
 
   
 </script>
@@ -59,14 +51,14 @@
         </div>
 
         <div id="others_stat_block">
-          {#each other_stats as item}
-
+          {#each other_stats as item,i }
+         
               <div class="other_stat">
                 <span class="other_stat_title">{item.category_name}</span>
                 <span class="other_stat_sum">{item.sum_current}/{item.sum_plan}</span>
-                <div class="other_progress" ><span class="other_progress_bar" in:others_stats_line={{duration:2000,current_sum:item.sum_current,plan_sum:item.sum_plan}} style=" background: {item.bg_color};"></span></div>
+                <div class="other_progress" ><span class="other_progress_bar" style="left:{item.percentage}%;background: {item.category_color};"></span></div>
               </div>
-
+            
             {/each}
         </div>
 
@@ -107,6 +99,7 @@
         min-height: 20rem;
         border-radius: 10px;
         background: var(--stats_card_bg_color);
+        
     }
 
     #main_stat_block{
@@ -201,7 +194,7 @@
                 top: 0;
                 width: 100%;
                 height: 10px;
-              
+                transition: all 2s ease-in-out;
                 
             }
           }

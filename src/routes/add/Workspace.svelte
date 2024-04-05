@@ -87,7 +87,7 @@ function delPurchase(id){
             height: auto;
             display: flex;
             justify-content: space-between;
-            padding-right: 10%;
+            padding:0 8%;
             /* column-gap: 10vw; */
 
             font-size: var(--main_font_size);

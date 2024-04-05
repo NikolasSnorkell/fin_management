@@ -1,6 +1,7 @@
 
 <script>
 	import BudgetStatsModule from "./stat_modules/BudgetStatsModule.svelte";
+	import HashtagsStatsModule from "./stat_modules/HashtagsStatsModule.svelte";
 
    
     
@@ -8,6 +9,7 @@
     
     <div id="stats__block" >
         <BudgetStatsModule/>
+        <HashtagsStatsModule/>
     </div>
     
     
@@ -20,7 +22,10 @@
     #stats__block{
         display:flex ;
         height: fit-content;
-        padding: 4rem 6rem;
+        padding: 4rem 0rem;
+        width: 80vw;
+        margin: 0 auto;
+        column-gap: 4rem;
     }
     
     
