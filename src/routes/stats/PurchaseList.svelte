@@ -14,6 +14,17 @@
         },
         {
             'id':1,
+            'date':'10/11/23',
+            'category':'Food',
+            'category_color':'#f88181',
+            'marketplace':'Евроопт',
+            'items':'Кефир 1,77; Творог 2*1,65; Молоко 1,89; Филе 2,49;',
+            'cost':350,
+            'commentary':'9.45 byn'
+            
+        },
+        {
+            'id':2,
             'date':'15/11/23',
             'category':'Others',
             'category_color':'#608bdb',
@@ -29,8 +40,8 @@
 </script>
     
     <div id="purchase_list__block" >
-        {#each purchase_list as purchase}
-            <div class="one_purchase" >
+        {#each purchase_list as purchase (purchase.id)}
+            <div class="one_purchase" id="purchase_{purchase.id}">
                 <p class="category_indicator" style:background-color={purchase.category_color}></p>
                 <span class="purchase_date">{purchase.date}</span>
                 <span class="purchase_category">{purchase.category}</span>
@@ -38,6 +49,7 @@
                 <span class="purchase_items">{purchase.items}</span>
                 <span class="purchase_cost">{purchase.cost}</span>
                 <span class="purchase_commentary">{purchase.commentary}</span>
+                <p class="del_purchase" ></p>
             </div>    
         {/each}
         
@@ -77,6 +89,25 @@
                 position: absolute;
                 left: 0;
                 
+            }
+
+            .del_purchase{
+                width: 3rem;
+                height: 100%;
+                position: absolute;
+                right: 0;
+                background-image: url('/src/lib/img/trash-solid-hover.png');
+                background-size: 50%;
+                background-position: center;
+                background-repeat: no-repeat;
+                opacity: .3;
+                transition: opacity .3s ease-in-out;
+
+                &:hover{
+                    cursor: pointer;
+                    opacity: 1;
+             
+                }
             }
             
             span{

@@ -10,24 +10,54 @@ function delPurchase(id){
         
     }
 
+function addPurchaseFunc(){
+
+    let dataSend = {};
+
+   // забираем выбранную категорию
+    (document.querySelectorAll('.category_radio')).forEach(element => {
+        if(element.checked){
+            dataSend.category = element.value;
+        }
+    });
+
+    // добавляем список покупок
+    dataSend.items= $purchase_items;
+
+    // добавляем дату покупки
+    dataSend.date = document.querySelector('#purchase_date').value;
+
+    // добавляем место покупки
+    dataSend.marketplace = document.querySelector('#purchase_market').value;
+    
+    // добавляем комментарий
+    dataSend.commentary = document.querySelector('#commentary_area').value;
+    
+    // добавляем сумму
+    dataSend.total_sum = document.querySelector('#total_sum_input').value;
+
+    console.log(dataSend);
+
+}
+
 
 </script>
 
 <div id="add__workspace" >
         <ul id="add__category">
             <li>
-                  <input type="radio" name="car_options" id="cat_option1" >
-                  <label for="cat_option1">Продукты</label>
+                  <input class="category_radio" type="radio" name="cat_options" id="cat_option1" value='Food'>
+                  <label for="cat_option1">Food</label>
             </li>
             <li>
-                 <input type="radio" name="car_options" id="cat_option2" >
-                 <label for="cat_option2">Другое</label>
+                 <input class="category_radio" type="radio" name="cat_options" id="cat_option2" value='Others'>
+                 <label for="cat_option2">Others</label>
             </li>
         </ul>
 
        
             <div id="add__items">
-                {#each $purchase_items as item}
+                {#each $purchase_items as item (item.id)}
                 <div class="item">
                     <div class="face">
                         <p class="item_title">{item.title}</p>
@@ -39,6 +69,9 @@ function delPurchase(id){
                         <button class="item_delete" id={'item_del_btn-'+item.id} on:click={()=>delPurchase(item.id)}></button>
                     </div>
                 </div>
+
+                {:else}
+                <p class="nothing_here">Nothing here yet....</p>
                 {/each}
             </div>
        
@@ -46,7 +79,7 @@ function delPurchase(id){
 
         <div id="add__others">
             <div id="date">
-                <input type="date"  name="date" id="purchase_date" value="2024-03-04" >
+                <input type="date"  name="date" id="purchase_date" value="" >
             </div>
             <div id="market">
                 <input type="text" id="purchase_market" placeholder="Market">
@@ -54,8 +87,8 @@ function delPurchase(id){
             <div id="commentary">
                 <textarea id="commentary_area" placeholder="Comments here"></textarea>
             </div>
-                <p id="final_sum">Total: <input type="number" id="total_input" value="{total_sum}"></p>
-                <button type="button" id="add_button" >Add purchase</button>
+                <p id="final_sum">Total: <input type="number" id="total_sum_input" value="{total_sum}"></p>
+                <button type="button" id="add_button" on:click={addPurchaseFunc}>Add purchase</button>
             
         </div>
 
@@ -218,6 +251,10 @@ function delPurchase(id){
         } 
         .hovered>.item_delete:hover{
             cursor: pointer;
+        }
+
+        #add__items .nothing_here{
+            margin: 2rem;
         }
       
 
