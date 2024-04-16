@@ -1,9 +1,10 @@
 <script>
-	import { browser } from '$app/environment';
-	// import Picker from 'vanilla-picker';
-	import { onMount } from 'svelte';
-	import ColorPicker from 'svelte-awesome-color-picker';
 
+	import ColorPicker from 'svelte-awesome-color-picker';
+	import Spinner from "../Spinner.svelte";
+    let spinnerElem;
+
+	$:categories_sum = 10000;
 	$: categories = [
 		{
 			id: 0,
@@ -40,9 +41,10 @@
 
 	//   })
 </script>
+<Spinner bind:this={spinnerElem}/>
 
 <div id="categories_settings__block">
-	<p id="categories_settings__title">Categories</p>
+	<p id="categories_settings__title">Categories ({categories_sum})</p>
 	<ul id="categories_settings__cats_list">
 		{#each categories as cat,index}
 			<li class="category_item">
@@ -70,7 +72,7 @@
 		type="button"
 		style:background="var(--save_btn_bg_{save_btn_back})"
 		value="Save"
-		on:click={() => console.log(categories)}
+		on:click={() => spinnerElem.toggle()}
 	/>
 </div>
 

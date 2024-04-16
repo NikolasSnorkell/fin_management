@@ -1,19 +1,23 @@
 <script>
 	import Income from './Income.svelte';
 	import CategoriesSettings from "./Categories_Settings.svelte";
-
+	import Expenses from './Expenses.svelte';
+    
+    
 	
 
 </script>
 
 <div id="profile_container">
+    
     <Income/>
+    <Expenses/>
     <CategoriesSettings/>
 
 
 </div>
 
-<style>
+<style lang="scss">
 
 :global(:root){
         --save_btn_bg_default:#585858;
@@ -34,6 +38,17 @@
     column-gap: 3rem;
     flex-wrap: wrap;
 
+}
+.spinner{
+    
+    position: relative;
+    &::before{
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #bcbcbc3d;
+    }
 }
 
 

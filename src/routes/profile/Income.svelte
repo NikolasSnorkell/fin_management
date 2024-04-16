@@ -1,4 +1,8 @@
 <script>
+	import Spinner from "../Spinner.svelte";
+    let spinnerElem;
+	
+	
 	$: incomes = {
 	regular:[	
         {
@@ -49,12 +53,13 @@
         
     }
 </script>
+<Spinner bind:this={spinnerElem}/>
 
 <div id="income_settings_block">
 	<h2 id="income_title">Incomes</h2>
 	<h3 class="income_subtitle">Regular</h3>
 	<ul id="regular_income_list">
-        {#each incomes.regular as income,index}
+        {#each incomes.regular as income,index(income.id)}
         <li>
 			<input class="income_title" type="text" name="" id="" value={income.income_name} />
 			<input class="income_value" type="number" name="" id="" value={income.income_sum} />
@@ -68,7 +73,7 @@
 	</ul>
 	<h3 class="income_subtitle">One-Time</h3>
 	<ul id="one_time_income_list">
-        {#each incomes.one_time as income,index}
+        {#each incomes.one_time as income,index(income.id)}
         <li>
 			<input class="income_title" type="text" name="" id="" value={income.income_name} />
 			<input class="income_value" type="number" name="" id="" value={income.income_sum} />
@@ -85,7 +90,7 @@
 		type="button"
 		style:background="var(--save_btn_bg_{save_btn_back})"
 		value="Save"
-		on:click={() => console.log()}
+		on:click={() => spinnerElem.toggle()}
 	/>
 </div>
 
