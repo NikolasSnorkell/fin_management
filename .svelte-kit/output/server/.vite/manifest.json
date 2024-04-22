@@ -1,0 +1,141 @@
+{
+  ".svelte-kit/generated/server/internal.js": {
+    "file": "internal.js",
+    "src": ".svelte-kit/generated/server/internal.js",
+    "isEntry": true,
+    "imports": [
+      "_internal.js"
+    ]
+  },
+  "_exports.js": {
+    "file": "chunks/exports.js"
+  },
+  "_index.js": {
+    "file": "chunks/index.js"
+  },
+  "_index2.js": {
+    "file": "chunks/index2.js",
+    "imports": [
+      "_ssr.js"
+    ]
+  },
+  "_internal.js": {
+    "file": "chunks/internal.js",
+    "imports": [
+      "_ssr.js"
+    ]
+  },
+  "_ssr.js": {
+    "file": "chunks/ssr.js"
+  },
+  "_stores.js": {
+    "file": "chunks/stores.js",
+    "imports": [
+      "_ssr.js",
+      "_exports.js"
+    ]
+  },
+  "node_modules/@sveltejs/kit/src/runtime/components/error.svelte": {
+    "file": "entries/fallbacks/error.svelte.js",
+    "src": "node_modules/@sveltejs/kit/src/runtime/components/error.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "_stores.js"
+    ]
+  },
+  "node_modules/@sveltejs/kit/src/runtime/server/index.js": {
+    "file": "index.js",
+    "src": "node_modules/@sveltejs/kit/src/runtime/server/index.js",
+    "isEntry": true,
+    "imports": [
+      "_internal.js",
+      "_index.js",
+      "_exports.js",
+      "_index2.js"
+    ]
+  },
+  "src/lib/font/Gilroy/Gilroy-ExtraBold.otf": {
+    "file": "_app/immutable/assets/Gilroy-ExtraBold.BDcfmT-i.otf",
+    "src": "src/lib/font/Gilroy/Gilroy-ExtraBold.otf"
+  },
+  "src/lib/font/Gilroy/Gilroy-Light.otf": {
+    "file": "_app/immutable/assets/Gilroy-Light.CVM2ydYb.otf",
+    "src": "src/lib/font/Gilroy/Gilroy-Light.otf"
+  },
+  "src/routes/+layout.svelte": {
+    "file": "entries/pages/_layout.svelte.js",
+    "src": "src/routes/+layout.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "_stores.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_layout.eeDnmtDw.css"
+    ],
+    "assets": [
+      "_app/immutable/assets/Gilroy-Light.CVM2ydYb.otf",
+      "_app/immutable/assets/Gilroy-ExtraBold.BDcfmT-i.otf"
+    ]
+  },
+  "src/routes/+page.svelte": {
+    "file": "entries/pages/_page.svelte.js",
+    "src": "src/routes/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "src/routes/add/+page.svelte"
+    ]
+  },
+  "src/routes/add/+page.svelte": {
+    "file": "entries/pages/add/_page.svelte.js",
+    "src": "src/routes/add/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "_index2.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page.CEXjCfI6.css"
+    ]
+  },
+  "src/routes/archive/+page.svelte": {
+    "file": "entries/pages/archive/_page.svelte.js",
+    "src": "src/routes/archive/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js"
+    ]
+  },
+  "src/routes/profile/+page.svelte": {
+    "file": "entries/pages/profile/_page.svelte.js",
+    "src": "src/routes/profile/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page.AH9XzUyE.css"
+    ]
+  },
+  "src/routes/profile/+server.js": {
+    "file": "entries/endpoints/profile/_server.js",
+    "src": "src/routes/profile/+server.js",
+    "isEntry": true,
+    "imports": [
+      "_index.js"
+    ]
+  },
+  "src/routes/stats/+page.svelte": {
+    "file": "entries/pages/stats/_page.svelte.js",
+    "src": "src/routes/stats/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page.BwhyjYjo.css"
+    ]
+  }
+}

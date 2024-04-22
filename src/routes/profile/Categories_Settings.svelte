@@ -1,68 +1,83 @@
 <script>
 
+	// @ts-ignore
 	import ColorPicker from 'svelte-awesome-color-picker';
 	import Spinner from "../Spinner.svelte";
     let spinnerElem;
 
-	$:categories_sum = 10000;
-	$: categories = [
-		{
-			id: 0,
-			category_name: 'Food',
-			category_sum:5000,
-			category_color: '#f88181'
-		},
-		{
-			id: 1,
-			category_name: 'Others',
-			category_sum:5000,
-			category_color: '#608bdb'
-		}
-	];
+	// $:categories_sum = 10000;
+	// $: categories = [
+	// 	{
+	// 		id: 0,
+	// 		category_name: 'Food',
+	// 		category_sum:5000,
+	// 		category_color: '#f88181'
+	// 	},
+	// 	{
+	// 		id: 1,
+	// 		category_name: 'Others',
+	// 		category_sum:5000,
+	// 		category_color: '#608bdb'
+	// 	}
+	// ];
 
 	let save_btn_back = 'default';
 
 	function categoryAdd() {
-        categories = [...categories,{
-            id: categories.length,
-			category_name: 'noname',
-            category_sum:0,
-			category_color: '#111111'
-        }]
+        // categories = [...categories,{
+        //     id: categories.length,
+		// 	category_name: 'noname',
+        //     category_sum:0,
+		// 	category_color: '#111111'
+        // }]
     }
 
     function categoryDel(e){
-        console.log(e.target.attributes.cat_index.value);
-        let cat_index = e.target.attributes.cat_index.value
-        categories.splice(cat_index,1);
-        categories = categories;
+        // console.log(e.target.attributes.cat_index.value);
+        // let cat_index = e.target.attributes.cat_index.value
+        // categories.splice(cat_index,1);
+        // categories = categories;
         
     }   
 
-	//   })
+
+
+
+	const fetchProfileData = (async () => {
+		const response = await fetch('https://127.0.0.1/fin_man/profile.php?type=categories');
+		return await response.json();
+	})();
 </script>
 <Spinner bind:this={spinnerElem}/>
 
 <div id="categories_settings__block">
-	<p id="categories_settings__title">Categories ({categories_sum})</p>
+	<p id="categories_settings__title">Categories (10000)</p>
+
 	<ul id="categories_settings__cats_list">
-		{#each categories as cat,index}
-			<li class="category_item">
-				<span data-id={cat.id} hidden></span>
-				<!-- <span class="category_title" data-name={cat.category_name}>{cat.category_name}</span> -->
-                <input class="category_title" type="text" name="" id="" value="{cat.category_name}" />
-                <input class="category_sum" type="number" name="" id="" value="{cat.category_sum}" />
-				<!-- <span id="category_color_{cat.id}" class="category_color" data-id={cat.category_color} style="background-color: {cat.category_color};"></span> -->
-				<ColorPicker
-					label=""
-					bind:hex={cat.category_color}
-					isAlpha
-					--slider-width="1rem"
-					--input-size="1rem"
-				/>
-				<span cat_index={index} class="category_del" on:click={categoryDel}></span>
-			</li>
-		{/each}
+
+		{#await fetchProfileData}
+		
+		{:then categories}
+			{#each categories as cat,index}
+				<li class="category_item">
+					<span data-id={cat.id} hidden></span>
+					<!-- <span class="category_title" data-name={cat.category_name}>{cat.category_name}</span> -->
+					<input class="category_title" type="text" name="" id="" value="{cat.category_name}" />
+					<input class="category_sum" type="number" name="" id="" value="{cat.category_sum}" />
+					<!-- <span id="category_color_{cat.id}" class="category_color" data-id={cat.category_color} style="background-color: {cat.category_color};"></span> -->
+					<ColorPicker
+						label=""
+						bind:hex={cat.category_color}
+						isAlpha
+						--slider-width="1rem"
+						--input-size="1rem"
+					/>
+					<button data-cat-index={index} class="category_del" on:click={categoryDel}></button>
+				</li>
+			{/each}
+		{/await}
+
+		
 		<li class="category_item">
 			<span class="category_add" on:click={categoryAdd}><i></i></span>
 		</li>
@@ -118,7 +133,7 @@
 						cursor: pointer;
 					}
 				}
-				span.category_del {
+				button.category_del {
 					width: 2rem;
 					height: 2rem;
 					background-image: url('/src/lib/img/trash-solid-hover.png');

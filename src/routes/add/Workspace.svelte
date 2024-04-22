@@ -2,41 +2,42 @@
 <script>
 import {purchase_items} from './stores.js';
 
-$: total_sum = ($purchase_items.reduce((total, item) => total + item.price, 0)).toFixed(2);
+// let total_sum = ($purchase_items.reduce((total, item) => total + item.price, 0)).toFixed(2);
+let total_sum = 0;
 
 function delPurchase(id){
         
-        purchase_items.delItem(id);
+        // purchase_items.delItem(id);
         
     }
 
 function addPurchaseFunc(){
 
-    let dataSend = {};
+//     let dataSend = {};
 
-   // забираем выбранную категорию
-    (document.querySelectorAll('.category_radio')).forEach(element => {
-        if(element.checked){
-            dataSend.category = element.value;
-        }
-    });
+//    // забираем выбранную категорию
+//     (document.querySelectorAll('.category_radio')).forEach(element => {
+//         if(element.checked){
+//             dataSend.category = element.value;
+//         }
+//     });
 
-    // добавляем список покупок
-    dataSend.items= $purchase_items;
+//     // добавляем список покупок
+//     dataSend.items= $purchase_items;
 
-    // добавляем дату покупки
-    dataSend.date = document.querySelector('#purchase_date').value;
+//     // добавляем дату покупки
+//     dataSend.date = document.querySelector('#purchase_date').value;
 
-    // добавляем место покупки
-    dataSend.marketplace = document.querySelector('#purchase_market').value;
+//     // добавляем место покупки
+//     dataSend.marketplace = document.querySelector('#purchase_market').value;
     
-    // добавляем комментарий
-    dataSend.commentary = document.querySelector('#commentary_area').value;
+//     // добавляем комментарий
+//     dataSend.commentary = document.querySelector('#commentary_area').value;
     
-    // добавляем сумму
-    dataSend.total_sum = document.querySelector('#total_sum_input').value;
+//     // добавляем сумму
+//     dataSend.total_sum = document.querySelector('#total_sum_input').value;
 
-    console.log(dataSend);
+//     console.log(dataSend);
 
 }
 

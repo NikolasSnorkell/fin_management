@@ -1,32 +1,29 @@
-
 <script>
-	import BudgetStatsModule from "./stat_modules/BudgetStatsModule.svelte";
-	import HashtagsStatsModule from "./stat_modules/HashtagsStatsModule.svelte";
+	import Stats_block from "./Stats_block.svelte";
+	import PurchaseList from "./PurchaseList.svelte";
+	
 
-   
-    
 </script>
-    
-    <div id="stats__block" >
-        <BudgetStatsModule/>
-        <HashtagsStatsModule/>
-    </div>
-    
-    
-    <style lang="scss">
-    
-        :global(:root) {
-         
-            }
-    
-    #stats__block{
-        display:flex ;
-        height: fit-content;
-        padding: 4rem 0rem;
-        width: 80vw;
-        margin: 0 auto;
-        column-gap: 4rem;
-    }
-    
-    
-    </style>
+
+<div id="stats_container">
+
+<Stats_block/>
+<PurchaseList/>
+
+</div>
+
+<style lang="scss">
+ :global(:root) {
+            /* Color scheme 1 */
+        --total_plan_sum: #5c5c5c;
+        --stats_card_bg_color:#f5f2f2;
+        --total_budget_bar:#47fa4f
+        }
+#stats_container{
+	width: 100%;
+    min-height: 100vh;
+    max-height: fit-content;
+}
+
+
+</style>

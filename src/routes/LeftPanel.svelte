@@ -1,25 +1,29 @@
 <script>
-import { onMount } from 'svelte';
-import { browser } from '$app/environment';
-import { page } from '$app/stores';
-
+// import { onMount } from 'svelte';
+// import { browser } from '$app/environment';
+// import { page } from '$app/stores';
+import Profile from './profile/Profile.svelte';
+import Add from './add/Add.svelte';
+import Stats from './stats/Stats.svelte';
+import Archive from './archive/Archive.svelte';
+import Router, {location, link} from 'svelte-spa-router';
 	
-        onMount(()=>{
-            let current_item = $page.route.id;   
-            document.querySelector('.l_panel__'+current_item.slice(1)).classList.add('l_panel__checked');
-        });
+//         onMount(()=>{
+//             let current_item = $page.route.id;   
+//             document.querySelector('.l_panel__'+current_item.slice(1)).classList.add('l_panel__checked');
+//         });
 
-        $: if(browser){
-            let current_item = $page.route.id;              
-            console.log(current_item);
+//         $: if(browser){
+//             let current_item = $page.route.id;              
+//             // console.log(current_item);
             
-            let elems = document.getElementsByClassName('l_panel__item');
+//             let elems = document.getElementsByClassName('l_panel__item');
             
-            for (let element of elems) {
-                element.classList.remove('l_panel__checked');
-            };
-            document.querySelector('.l_panel__'+current_item.slice(1)).classList.add('l_panel__checked');
-        }
+//             for (let element of elems) {
+//                 element.classList.remove('l_panel__checked');
+//             };
+//             document.querySelector('.l_panel__'+current_item.slice(1)).classList.add('l_panel__checked');
+//         }
 	
     
 
@@ -29,29 +33,37 @@ import { page } from '$app/stores';
 <div id="l_panel" class="color_theme">
 
         <div class="l_panel__item l_panel__profile">
-           <a href="/profile" data-name='profile' style="background-image: url('src/lib/img/user-solid-white.png');"> 
-            <span style="background-image: url('src/lib/img/user-solid-hover.png');"></span>
+           <a href="/#/Profile" data-name='profile' > 
+            <span ></span>
         </a>
         </div>
         <div class="l_panel__item l_panel__add">
-           <a href="/add" data-name='add' style="background-image: url('src/lib/img/add-solid-white.png');">
-             <span style="background-image: url('src/lib/img/add-solid-hover.png');"></span>
+           <a href="/#/Add" data-name='add' >
+             <span ></span>
         </a>
         </div>
         <div class="l_panel__item l_panel__stats">
-           <a href="/stats"  data-name='stats' style="background-image: url('src/lib/img/stats-solid-white.png');">
-             <span style="background-image: url('src/lib/img/stats-solid-hover.png');"></span>
+           <a href="/#/Stats"  data-name='stats' >
+             <span ></span>
             </a>
         </div>
         <div class="l_panel__item l_panel__archive">
-            <a href="/archive" data-name='archive' style="background-image: url('src/lib/img/archive-solid-white.png');">
-                <span class="hover_span" style="background-image: url('src/lib/img/archive-solid-hover.png');"></span>
+            <a href="/#/Archive" data-name='archive' >
+                <span class="hover_span"></span>
             </a>
         </div>
 
 </div>
+<Router routes={{
+    '/': Profile,
+    '/Profile': Profile,
+    '/Add': Add,
+    '/Stats': Stats,
+    '/Archive': Archive
+}} /> 
 
-<style>
+
+<style lang="scss">
 
     :global(:root) {
         /* Color scheme 1 */
@@ -75,6 +87,31 @@ import { page } from '$app/stores';
         height:var(--l_panel_width);
         
         transition:all .2s ease-in;
+
+        &.l_panel__profile a{
+            background-image: url('src/lib/img/user-solid-white.png');
+            span{
+                background-image: url('src/lib/img/user-solid-hover.png');
+            }
+        }
+        &.l_panel__add a{
+            background-image: url('src/lib/img/add-solid-white.png');
+            span{
+                background-image: url('src/lib/img/add-solid-hover.png');
+            }
+        }
+        &.l_panel__stats a{
+            background-image: url('src/lib/img/stats-solid-white.png');
+            span{
+                background-image: url('src/lib/img/stats-solid-hover.png');
+            }
+        }
+        &.l_panel__archive a{
+            background-image: url('src/lib/img/archive-solid-white.png');
+            span{
+                background-image: url('src/lib/img/archive-solid-hover.png');
+            }
+        }
     }
 
     .l_panel__item a{

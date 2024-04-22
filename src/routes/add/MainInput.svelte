@@ -7,35 +7,35 @@
     let purchase_name = '';
     let purchase_price = null;
 
-    $: suggest = ['Молоко - 1.77','Молоко - 1.77','Молоко - 1.77','Молоко - 1.77'];
+    let suggest = ['Молоко - 1.77','Молоко - 1.77','Молоко - 1.77','Молоко - 1.77'];
 
 
     function addPurchase(){
-        if(!purchase_name || !purchase_price)return
+        // if(!purchase_name || !purchase_price)return
 
-        purchase_items.addItem({title:purchase_name,price:+purchase_price,hashtags:'#test'});
-        console.log($purchase_items);
-        purchase_name = '';
-        purchase_price = null;
+        // purchase_items.addItem({title:purchase_name,price:+purchase_price,hashtags:'#test'});
+        // console.log($purchase_items);
+        // purchase_name = '';
+        // purchase_price = null;
     }
 
     function suggestClick(e){
         
-        let value = e.target.innerHTML;
-        if(value.includes(' - ')){
-            let new_params = value.split(' - ');
-            purchase_name = new_params[0];
-            purchase_price = new_params[1];
-            suggest = [];
-        }
+        // let value = e.target.innerHTML;
+        // if(value.includes(' - ')){
+        //     let new_params = value.split(' - ');
+        //     purchase_name = new_params[0];
+        //     purchase_price = new_params[1];
+        //     suggest = [];
+        // }
     }
 
-    $: if(purchase_name.length>2){
-        //TODO добавить запрос на бэк на получение предложки
-            suggest = ['Молоко - 1.77','Творог - 1.77'];
-        }else if(purchase_name.length<2){
-            suggest = [];
-        }
+    // $: if(purchase_name.length>2){
+    //     //TODO добавить запрос на бэк на получение предложки
+    //         suggest = ['Молоко - 1.77','Творог - 1.77'];
+    //     }else if(purchase_name.length<2){
+    //         suggest = [];
+    //     }
     
 </script>
 
@@ -44,11 +44,11 @@
 
     <input type="text" name="purchase" id="input_purchase" placeholder="Add your purchases" bind:value = {purchase_name}>
     <input type="text" name="purchase_price" id="input_price" placeholder="Price" bind:value = {purchase_price}>
-    <button on:click={addPurchase}></button>
+    <button id="add_purchase_btn" on:click={addPurchase}></button>
 
     <ul id="maininput__suggest">
         {#each suggest as item}
-            <li on:click={suggestClick}>{item}</li>
+            <li><button on:click={suggestClick}>{item}</button></li>
         {/each}
     </ul>
 </div>
@@ -58,7 +58,7 @@
     :global(:root) {
         
         
-        --maininput__suggest_bg:#dadada;
+        --maininput__suggest_bg:#ffffff;
         --maininput__suggest_bg_hover:#e7faff;
     
         font-family: 'Gilroy';
@@ -93,7 +93,7 @@
     }
 
 
-    button{
+    button#add_purchase_btn{
         width: 4rem;
         height: 3.5rem;
         background-color: var(--add_button_bg_color);
@@ -106,8 +106,9 @@
         margin-left: 1rem;
         transition: background .3s ease-in-out;
     }
-    button:hover{
+    button#add_purchase_btn:hover{
         background-color: var(--add_button_hover_bg_color);
+        cursor: pointer;
     }
 
     ul#maininput__suggest{
@@ -123,16 +124,17 @@
 
         font-size: var(--main_font_size);
         border-radius:0 0 10px 10px;
-        background: var(--maininput__suggest_bg);
+        
        
     }
 
-    ul#maininput__suggest li{
+    ul#maininput__suggest li button{
       padding:1rem 4rem;
       transition: background .2s ease-in-out;
+      background: var(--maininput__suggest_bg);
     }
 
-    ul#maininput__suggest li:hover{
+    ul#maininput__suggest li button:hover{
       cursor: pointer;
       background: var(--maininput__suggest_bg_hover);
     }
