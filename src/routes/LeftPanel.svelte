@@ -1,29 +1,35 @@
 <script>
-// import { onMount } from 'svelte';
-// import { browser } from '$app/environment';
-// import { page } from '$app/stores';
 import Profile from './profile/Profile.svelte';
 import Add from './add/Add.svelte';
 import Stats from './stats/Stats.svelte';
 import Archive from './archive/Archive.svelte';
+// @ts-ignore
 import Router, {location, link} from 'svelte-spa-router';
 	
-//         onMount(()=>{
-//             let current_item = $page.route.id;   
-//             document.querySelector('.l_panel__'+current_item.slice(1)).classList.add('l_panel__checked');
-//         });
+        // @ts-ignore
+        function loadIconFromRoute(){
+            let current_item = $location.toLowerCase();   
+            
+                let items = document.querySelectorAll('.l_panel__item');
+                items.forEach((elem)=>{
+                    elem.classList.remove('l_panel__checked');
+                })
+                document.querySelector('.l_panel__'+current_item.slice(1)).classList.add('l_panel__checked');
+            
+        }
+            
 
-//         $: if(browser){
-//             let current_item = $page.route.id;              
-//             // console.log(current_item);
+        
+            // let current_item = $page.route.id;              
+            // // console.log(current_item);
             
-//             let elems = document.getElementsByClassName('l_panel__item');
+            // let elems = document.getElementsByClassName('l_panel__item');
             
-//             for (let element of elems) {
-//                 element.classList.remove('l_panel__checked');
-//             };
-//             document.querySelector('.l_panel__'+current_item.slice(1)).classList.add('l_panel__checked');
-//         }
+            // for (let element of elems) {
+            //     element.classList.remove('l_panel__checked');
+            // };
+            // document.querySelector('.l_panel__'+current_item.slice(1)).classList.add('l_panel__checked');
+        
 	
     
 
@@ -60,7 +66,7 @@ import Router, {location, link} from 'svelte-spa-router';
     '/Add': Add,
     '/Stats': Stats,
     '/Archive': Archive
-}} /> 
+}} on:routeLoaded={loadIconFromRoute}/> 
 
 
 <style lang="scss">

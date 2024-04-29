@@ -4,61 +4,52 @@
 	import ColorPicker from 'svelte-awesome-color-picker';
 	import Spinner from "../Spinner.svelte";
     let spinnerElem;
+	import SaveBtn from './SaveBtn.svelte';
+	import { onMount } from 'svelte';
 
-	// $:categories_sum = 10000;
-	// $: categories = [
-	// 	{
-	// 		id: 0,
-	// 		category_name: 'Food',
-	// 		category_sum:5000,
-	// 		category_color: '#f88181'
-	// 	},
-	// 	{
-	// 		id: 1,
-	// 		category_name: 'Others',
-	// 		category_sum:5000,
-	// 		category_color: '#608bdb'
-	// 	}
-	// ];
+	
+	let categories = null;
 
-	let save_btn_back = 'default';
+	onMount(async function () {
+    	const response = await fetch('https://127.0.0.1/fin_man/profile.php?type=categories');
+    	const data = await response.json();
+		console.log(data);
+		categories = data;
+  });
+	
 
 	function categoryAdd() {
-        // categories = [...categories,{
-        //     id: categories.length,
-		// 	category_name: 'noname',
-        //     category_sum:0,
-		// 	category_color: '#111111'
-        // }]
+        categories.items = [...categories.items,{
+            id: categories.items.length,
+			category_name: 'noname',
+            category_sum:0,
+			category_color: '#111111'
+        }]
     }
 
     function categoryDel(e){
-        // console.log(e.target.attributes.cat_index.value);
-        // let cat_index = e.target.attributes.cat_index.value
-        // categories.splice(cat_index,1);
-        // categories = categories;
+        console.log(e.target.attributes[0].value);
+        let cat_index = e.target.attributes[0].value
+        categories.items.splice(cat_index,1);
+        categories = categories;
         
     }   
 
 
-
-
-	const fetchProfileData = (async () => {
-		const response = await fetch('https://127.0.0.1/fin_man/profile.php?type=categories');
-		return await response.json();
-	})();
 </script>
-<Spinner bind:this={spinnerElem}/>
+
 
 <div id="categories_settings__block">
-	<p id="categories_settings__title">Categories (10000)</p>
-
+	<Spinner bind:this={spinnerElem}/>
+	{#if categories}
+		<p id="categories_settings__title">Categories ({categories.sum})</p>
+	{:else}
+		<p id="categories_settings__title">Categories (Loadings...)</p>
+	{/if}
 	<ul id="categories_settings__cats_list">
 
-		{#await fetchProfileData}
-		
-		{:then categories}
-			{#each categories as cat,index}
+		{#if categories}
+			{#each categories.items as cat,index (cat.id)}
 				<li class="category_item">
 					<span data-id={cat.id} hidden></span>
 					<!-- <span class="category_title" data-name={cat.category_name}>{cat.category_name}</span> -->
@@ -75,19 +66,18 @@
 					<button data-cat-index={index} class="category_del" on:click={categoryDel}></button>
 				</li>
 			{/each}
-		{/await}
+		{/if}
 
 		
 		<li class="category_item">
-			<span class="category_add" on:click={categoryAdd}><i></i></span>
+			<button class="category_add" on:click={categoryAdd}><i></i></button>
 		</li>
 	</ul>
-	<input
-		id="category_settings_save"
-		type="button"
-		style:background="var(--save_btn_bg_{save_btn_back})"
-		value="Save"
-		on:click={() => spinnerElem.toggle()}
+	<SaveBtn
+	bind:fetchData={categories}
+	bind:spinnerElem={spinnerElem}
+	id='categories_settings_save'
+	type='categories2'
 	/>
 </div>
 
@@ -95,12 +85,13 @@
 
 <style lang="scss">
 	#categories_settings__block {
-		min-width: 18rem;
-		width: fit-content;
+		width: 24rem;
+		// width: fit-content;
 		height: fit-content;
 		background: white;
 		border-radius: 10px;
 		padding: 2rem;
+		position: relative;
 
 		#categories_settings__title {
 			font-size: 30px;
@@ -118,11 +109,11 @@
 
 				input.category_title {
 					font-size: 20px;
-					width: 10rem;
+					width: 60%;
 				}
                 input.category_sum {
 					font-size: 20px;
-					width: 8rem;
+					width: 30%;
                     text-align: center;
 				}
 				span.category_color {
@@ -136,6 +127,7 @@
 				button.category_del {
 					width: 2rem;
 					height: 2rem;
+					background-color: #00000000;
 					background-image: url('/src/lib/img/trash-solid-hover.png');
 					background-size: 50%;
 					background-position: center;
@@ -148,7 +140,7 @@
 						opacity: 1;
 					}
 				}
-				span.category_add {
+				button.category_add {
 					width: 100%;
 					height: 1.5rem;
 					background-color: var(--add_btn_back);

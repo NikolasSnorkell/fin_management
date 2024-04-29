@@ -12,14 +12,15 @@
 
 <style lang="scss">
    .spinner{
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     position: absolute;
     top: 0;left:0;
-    background: #bcbcbc72;
+    background: #bcbcbc;
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 150;
     
     &::before{
         content: '';

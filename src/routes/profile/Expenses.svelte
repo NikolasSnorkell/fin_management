@@ -1,82 +1,70 @@
 <script>    
-  import Spinner from "../Spinner.svelte";
+	import { onMount } from "svelte";
+  	import Spinner from "../Spinner.svelte";
     let spinnerElem;
+	import SaveBtn from "./SaveBtn.svelte";
+	let expenses = null;
 
-	// let expenses = {
-	// regular:[	
-    //     {
-	// 		id: 0,
-	// 		expense_name: 'Отложка',
-	// 		expense_sum:5000
-	// 	},
-    //     {
-	// 		id: 1,
-	// 		expense_name: 'Родителям',
-	// 		expense_sum:7000
-	// 	}
-    // ],
-	// one_time:[	
-      
-    // ],
-    // };
+	onMount(async function () {
+    	const response = await fetch('https://127.0.0.1/fin_man/profile.php?type=expenses');
+    	const data = await response.json();
+		console.log(data);
+		expenses = data;
+  });
 
-    let save_btn_back = 'default';
+    
 
     function expensesAdd(e) {
-        // let expense_type = e.target.attributes.expense_type.value
+        let expense_type = e.target.attributes[1].value
 
-        // if(expense_type=='regular') {
-        //     expenses.regular = [...expenses.regular,{
-        //     id: expenses.regular.length,
-		// 	expense_name: 'noname',
-        //     expense_sum:0
-        // }]
-        // }
-        // else {
-        //     expenses.one_time = [...expenses.one_time,{
-        //     id: expenses.one_time.length,
-		// 	expense_name: 'noname',
-        //     expense_sum:0
-        // }]
-        // }
+        if(expense_type=='regular') {
+            expenses.regular = [...expenses.regular,{
+            id: expenses.regular.length,
+			expense_name: 'noname',
+            expense_sum:0
+        }]
+        }
+        else {
+            expenses.one_time = [...expenses.one_time,{
+            id: expenses.one_time.length,
+			expense_name: 'noname',
+            expense_sum:0
+        }]
+        }
 
-        // expenses = expenses;
+        expenses = expenses;
     }
 
     function expensesDel(e){
         
-        // let expense_index = e.target.attributes.expense_index.value
-        // let expense_type = e.target.attributes.expense_type.value
-        // if(expense_type=='regular') expenses.regular.splice(expense_index,1);
-        // else expenses.one_time.splice(expense_index,1);
-        // expenses = expenses;
+        let expense_index = e.target.attributes[0].value
+        let expense_type = e.target.attributes[1].value
+        if(expense_type=='regular') expenses.regular.splice(expense_index,1);
+        else expenses.one_time.splice(expense_index,1);
+        expenses = expenses;
         
     }
 
 
-	const fetchProfileData = (async () => {
-		const response = await fetch('https://127.0.0.1/fin_man/profile.php?type=expenses');
-		return await response.json();
-	})();
+	
 
 </script>
-<Spinner bind:this={spinnerElem}/>
+
 
 <div id="expenses_settings_block" >
+	<Spinner bind:this={spinnerElem}/>
 	<h2 id="expenses_title">Expenses</h2>
 	<h3 class="expenses_subtitle">Regular</h3>
 	<ul id="regular_expenses_list">
-		{#await fetchProfileData}
-		
-	{:then expenses}
-		{#each expenses.regular as expense, index (expense.id)}
-			<li>
-				<input class="expenses_title" type="text" name="" id="" value={expense.expense_name} />
-				<input class="expenses_value" type="number" name="" id="" value={expense.expense_sum} />
-				<button data-expense-index={index} data-expense-type="regular" class="expenses_del" on:click={expensesDel}></button>
-			</li>  
-		{/each}
-	{/await}
+		{#if expenses}
+			{#each expenses.regular as expense, index (expense.id)}
+				<li>
+					<input class="expenses_title" type="text" name="" id="" value={expense.expense_name} />
+					<input class="expenses_value" type="number" name="" id="" value={expense.expense_sum} />
+					<button data-expense-index={index} data-expense-type="regular" class="expenses_del" on:click={expensesDel}></button>
+				</li>  
+			{/each}
+		{/if}
 
 	
 		<li id="regular_expenses_add" class="expenses_item">
@@ -85,28 +73,25 @@
 	</ul>
 	<h3 class="expenses_subtitle">One-Time</h3>
 	<ul id="one_time_expenses_list">
-		{#await fetchProfileData}
-		
-	{:then expenses}
-		{#each expenses.one_time as expense, index (expense.id)}
-			<li>
-				<input class="expenses_title" type="text" name="" id="" value={expense.expense_name} />
-				<input class="expenses_value" type="number" name="" id="" value={expense.expense_sum} />
-				<button data-expense-index={index} data-expense-type="one_time" class="expenses_del" on:click={expensesDel}></button>
-			</li>  
-		{/each}
-	{/await}
+		{#if expenses}
+			{#each expenses.one_time as expense, index (expense.id)}
+				<li>
+					<input class="expenses_title" type="text" name="" id="" value={expense.expense_name} />
+					<input class="expenses_value" type="number" name="" id="" value={expense.expense_sum} />
+					<button data-expense-index={index} data-expense-type="one_time" class="expenses_del" on:click={expensesDel}></button>
+				</li>  
+			{/each}
+		{/if}
 
 		<li id="one_time_expenses_add" class="expenses_item">
 			<button class="expenses_add" data-expense-type="one_time" on:click={expensesAdd}><i></i></button>
 		</li>
 	</ul>
-	<input
-		id="expenses_settings_save"
-		type="button"
-		style:background="var(--save_btn_bg_{save_btn_back})"
-		value="Save"
-		on:click={() => spinnerElem.toggle()}
+	<SaveBtn
+	bind:fetchData={expenses}
+	bind:spinnerElem={spinnerElem}
+	id='expenses_settings_save'
+	type="expenses2"
 	/>
 </div>
 
@@ -116,12 +101,13 @@
 
 
 	#expenses_settings_block {
-		min-width: 18rem;
-		width: fit-content;
+		width: 24rem;
+		// width: fit-content;
 		height: fit-content;
 		background: white;
 		border-radius: 10px;
 		padding: 2rem;
+		position: relative;
 
 		h2#expenses_title {
 			font-size: 30px;
@@ -137,18 +123,18 @@
 		ul {
 			li {
 				display: flex;
-				min-width: 18rem;
+				width: 100%;
 				margin-bottom: 0.5rem;
 
 				input {
 					font-size: 20px;
 				}
 				input.expenses_title {
-					width: 12rem;
+					width: 70%;
 				}
 				input.expenses_value {
 					text-align: end;
-					width: 8rem;
+					width: 30%;
 				}
 
 				button.expenses_add {
@@ -179,6 +165,7 @@
 				button.expenses_del {
 					width: 2rem;
 					height: 2rem;
+					background-color: rgba(255, 0, 0, 0);
 					background-image: url('/src/lib/img/trash-solid-hover.png');
 					background-size: 50%;
 					background-position: center;

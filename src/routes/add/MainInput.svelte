@@ -11,6 +11,7 @@
 
 
     function addPurchase(){
+        
         // if(!purchase_name || !purchase_price)return
 
         // purchase_items.addItem({title:purchase_name,price:+purchase_price,hashtags:'#test'});
@@ -70,7 +71,7 @@
         display: flex;
         justify-content: center;
         margin: auto;
-        margin-top: 2rem;
+        padding-top: 2rem;
         position: relative;
     }
 
@@ -119,7 +120,7 @@
         height: fit-content;
         max-height: 22vh;
         overflow-y: scroll;
-        /* padding: 1.5rem; */
+        margin-top: 2rem; 
         z-index: 100;
 
         font-size: var(--main_font_size);

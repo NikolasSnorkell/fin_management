@@ -82,10 +82,16 @@ select {
   border: none;
 }
 
-
+body{
+  height: 100%;
+  overflow-y: scroll;
+}
 
 #app{
   background: linear-gradient(-45deg,#e1e1e1,#f0f3f3,#eff1f1,#d5d7d6);
   font-family: Gilroy;
+  
+  
+  padding-bottom: 3rem;
 }
 

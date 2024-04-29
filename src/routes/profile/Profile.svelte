@@ -61,9 +61,10 @@
  
     // margin-left: 6rem;
     padding: 3rem;
-    padding-left: 5.6rem;
+    padding-left: 8.6rem;
     display: flex;
     column-gap: 3rem;
+    row-gap: 3rem;
     flex-wrap: wrap;
 
 }

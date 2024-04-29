@@ -1,75 +1,86 @@
 <script>
+	import { onMount } from 'svelte';
 	import App from '../../App.svelte';
 	import Spinner from '../Spinner.svelte';
+	import SaveBtn from './SaveBtn.svelte';
 	let spinnerElem;
-let incomes = [];
-	const fetchProfileData = (async () => {
-		const response = await fetch('https://127.0.0.1/fin_man/profile.php?type=income');
-		return await response.json();
-	})();
-	// let incomes = {
-	// regular:[
-	//     {
-	// 		id: 0,
-	// 		income_name: 'Зарплата',
-	// 		income_sum:30000
-	// 	}
-	// ],
-	// one_time:[
-	//     {
-	// 		id: 0,
-	// 		income_name: 'Остаток с прошлого',
-	// 		income_sum:3500
-	// 	}
-	// ],
-	// };
 
-	let save_btn_back = 'default';
+	
+	var incomes = null;
+	
+	// onMount(getIncomes);
+
+	onMount(async function () {
+    	const response = await fetch('https://127.0.0.1/fin_man/profile.php?type=income');
+    	const data = await response.json();
+		console.log(data);
+		incomes = data;
+  });
+
+	// async function getIncomes() {
+		
+	// 	const res = await fetch('https://127.0.0.1/fin_man/profile.php?type=income');
+	// 	const result =await res.json();
+	// 	// result.then((value)=>result = value);
+	// 	console.log('result');
+	// 	// console.log(result);
+	// 	incomes = result;
+	// 	if (res.ok) {
+	// 		return result;
+	// 	} else {
+	// 		throw new Error(result);
+	// 	}
+	// }
+
+	
 
 	function incomeAdd(e) {
-		// let income_type = e.target.attributes.income_type.value;
+		let income_type = e.target.attributes[1].value;
 
-		// if (income_type == 'regular') {
-		// 	incomes.regular = [
-		// 		...incomes.regular,
-		// 		{
-		// 			id: incomes.regular.length,
-		// 			income_name: 'noname',
-		// 			income_sum: 0
-		// 		}
-		// 	];
-		// } else {
-		// 	incomes.one_time = [
-		// 		...incomes.one_time,
-		// 		{
-		// 			id: incomes.one_time.length,
-		// 			income_name: 'noname',
-		// 			income_sum: 0
-		// 		}
-		// 	];
-		// }
+		if (income_type == 'regular') {
+			incomes.regular = [
+				...incomes.regular,
+				{
+					id: incomes.regular.length,
+					income_name: 'noname',
+					income_sum: 0
+				}
+			];
+		} else {
+			incomes.one_time = [
+				...incomes.one_time,
+				{
+					id: incomes.one_time.length,
+					income_name: 'noname',
+					income_sum: 0
+				}
+			];
+		}
 
-		// incomes = incomes;
+		incomes = incomes;
 	}
 
 	function incomeDel(e) {
-		// let income_index = e.target.attributes.income_index.value;
-		// let income_type = e.target.attributes.income_type.value;
-		// if (income_type == 'regular') incomes.regular.splice(income_index, 1);
-		// else incomes.one_time.splice(income_index, 1);
-		// incomes = incomes;
+		let income_index = e.target.attributes[0].value;
+		let income_type = e.target.attributes[1].value;
+		if (income_type == 'regular') incomes.regular.splice(income_index, 1);
+		else incomes.one_time.splice(income_index, 1);
+		incomes = incomes;
 	}
+
 </script>
 
-<Spinner bind:this={spinnerElem} />
+
 
 <div id="income_settings_block">
+	<Spinner bind:this={spinnerElem} />
 	<h2 id="income_title">Incomes</h2>
 	<h3 class="income_subtitle">Regular</h3>
 	<ul id="regular_income_list">
-		{#await fetchProfileData}
-			
-		{:then incomes}
+		
+	{#if incomes}
+		
+	
 			{#each incomes.regular as income, index (income.id)}
 				<li>
 					<input class="income_title" type="text" name="" id="" value={income.income_name} />
@@ -78,7 +89,8 @@ let incomes = [];
 					></button>
 				</li>
 			{/each}
-		{/await}
+		{/if}
+		
 
 		<li id="regular_income_add" class="income_item">
 			<button class="income_add" data-income-type="regular" on:click={incomeAdd}><i></i></button>
@@ -86,9 +98,8 @@ let incomes = [];
 	</ul>
 	<h3 class="income_subtitle">One-Time</h3>
 	<ul id="one_time_income_list">
-		{#await fetchProfileData}
 		
-	{:then incomes}
+	{#if incomes}
 		{#each incomes.one_time as income, index (income.id)}
 			<li>
 				<input class="income_title" type="text" name="" id="" value={income.income_name} />
@@ -97,17 +108,25 @@ let incomes = [];
 				></button>
 			</li>
 		{/each}
-		{/await}
+		{/if}
+		
 		<li id="one_time_income_add" class="income_item">
 			<button class="income_add" data-income-type="one_time" on:click={incomeAdd}><i></i></button>
 		</li>
 	</ul>
-	<input
+	<!-- <input
 		id="income_settings_save"
 		type="button"
 		style:background="var(--save_btn_bg_{save_btn_back})"
 		value="Save"
-		on:click={() => spinnerElem.toggle()}
+		on:click={incomesSave}
+	/> -->
+
+	<SaveBtn
+	bind:fetchData={incomes}
+	bind:spinnerElem={spinnerElem}
+	id='income_settings_save'
+	type='income2'
 	/>
 </div>
 
@@ -115,13 +134,15 @@ let incomes = [];
 
 <style lang="scss">
 	#income_settings_block {
-		min-width: 18rem;
-		width: fit-content;
+		width: 24rem;
+		// width: fit-content;
 		height: fit-content;
 		background: white;
 		border-radius: 10px;
 		padding: 2rem;
-		margin-left: 3rem;
+		// margin-left: 3rem;
+		position: relative;
+		overflow: hidden;
 	
 
 		h2#income_title {
@@ -139,7 +160,7 @@ let incomes = [];
 		ul {
 			li {
 				display: flex;
-				min-width: 18rem;
+				width: 100%;
 				margin-bottom: 0.5rem;
 
 				input {
@@ -147,11 +168,11 @@ let incomes = [];
 					border: none;
 				}
 				input.income_title {
-					width: 12rem;
+					width: 70%;
 				}
 				input.income_value {
 					text-align: end;
-					width: 8rem;
+					width: 30%;
 				}
 
 				button.income_add {
@@ -199,20 +220,20 @@ let incomes = [];
 			}
 		}
 
-		#income_settings_save {
-			width: 5rem;
-			height: 2.5rem;
-			color: white;
-			// background: var(--save_btn_bg_default);
-			border-radius: 5px;
-			font-size: 16px;
-			float: right;
-			transition: background 0.2s ease-in-out;
+		// #income_settings_save {
+		// 	width: 5rem;
+		// 	height: 2.5rem;
+		// 	color: white;
+		// 	// background: var(--save_btn_bg_default);
+		// 	border-radius: 5px;
+		// 	font-size: 16px;
+		// 	float: right;
+		// 	transition: background 0.2s ease-in-out;
 
-			&:hover {
-				cursor: pointer;
-				background: var(--save_btn_bg_hover) !important;
-			}
-		}
+		// 	&:hover {
+		// 		cursor: pointer;
+		// 		background: var(--save_btn_bg_hover) !important;
+		// 	}
+		// }
 	}
 </style>
